@@ -1,0 +1,74 @@
+#reset {
+  visibility: visible;
+}
+
+#answerblock {
+  text-align: center;
+
+}
+
+#questionblock {
+  text-align: center;
+  font-weight: bold;
+}
+
+#timeleft {
+  text-align: center;
+  height: 30px;
+}
+
+#question {
+  font-size: 40px;
+}
+
+#results {
+  color: blue;
+  padding: 0;
+  margin: 0;
+  align-content: center;
+  margin-top: 0px;
+  font-size: xx-large;
+}
+
+body {
+  background-image: url("../images/bobsbg.png");
+  background-size: cover;
+  font-family: 'Karla', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: red;
+  font-weight: bolder;
+  padding: 20px;
+  font-size: 45px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+p {
+  margin: 10px;
+  font-weight: bold;
+  color: red;
+  font-size: 20px;
+}
+
+h2, h4 {
+  margin: 30px;
+  font-weight: bold;
+}
+
+.wrapper {
+  margin: 10px auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 2px solid #f0ec17;
+  height: 500px;
+  width: 60%;
+  text-align: center;
+}
+
+.answers {
+  font-size: 20px;
+  font: large;
+}
+
+
