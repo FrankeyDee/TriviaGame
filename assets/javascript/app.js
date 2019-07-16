@@ -3,6 +3,8 @@ $(document).ready(function(){
 
     $("#remaining-time").hide();
     $("#next").hide();
+    $("#start-over").hide();
+    $('#results').html('');
     $("#start").click(startGame);
 
     var counter = 0;
@@ -62,6 +64,7 @@ $(document).ready(function(){
         }
     ];
 
+
     function hidden() {
     $('#question').hide();
     $('#answer1').hide();
@@ -71,14 +74,9 @@ $(document).ready(function(){
    }
 
     function startGame() {
-        // console.log('random');
         $("#remaining-time").show();
         $("#start").hide();
-        runTimer();
-        askQuestion();
-    };
-
-    function runTimer() {
+        
         var i = 20;
         var interval = setInterval(function() {
             i--;
@@ -87,72 +85,81 @@ $(document).ready(function(){
                 clearInterval(interval);
                 hidden();
                 $('#results').html('OUT OF TIME! The answer is '+options[currentQuestion].correct + '<br>' + options[currentQuestion].photo);
-                $('#next').show();
+                gameOver();
             }
         }, 1000);
         
-    };
+        askQuestion();
+   
+        var currentQuestion = 0
 
-    var currentQuestion = 0
+        function gameOver() {
+            hidden();
+            $('#next').hide();
+            $('#results').html('GAME OVER!');
+            clearInterval(interval);
 
-    function gameOver() {
-        hidden();
-        $('#remaining-time').hide();
-        $('#results').html('GAME OVER!');
-    }
-
-    function askQuestion() {
-        $('#next').hide();
-        $('#question').show();
-        $('#answer1').show();
-        $('#answer2').show();
-        $('#answer3').show();
-        $('#answer4').show();
-
-        currentQuestion = Math.floor(Math.random() * options.length);
-                    
-        $('#question').html(options[currentQuestion].question);
-        $('#answer1').html(options[currentQuestion].choice[0]);
-        $('#answer2').html(options[currentQuestion].choice[1]);
-        $('#answer3').html(options[currentQuestion].choice[2]);
-        $('#answer4').html(options[currentQuestion].choice[3]);
-
-        
-    }
-
-    $(".answers").click(function() {
-        hidden();
-
-        var thisOption = $(this).text()
-        var correctAnswer = options[currentQuestion].choice[options[currentQuestion].answer]
-
-        if (thisOption === correctAnswer) {
-            $('#results').html('Correct!'+ '<br>' + options[currentQuestion].photo);
-            $('#next').show();
-            wins += 1;
-            $('#wins').text('Wins: '+ wins + '/7');
-
-        } else {
-            $('#results').html('OH NO! The answer is '+ options[currentQuestion].correct + '<br>' + options[currentQuestion].photo);
-            $('#next').show();
+            $('#start-over').show();
         }
 
-    })
+        function askQuestion() {
+            $('#next').hide();
+            $('#question').show();
+            $('#answer1').show();
+            $('#answer2').show();
+            $('#answer3').show();
+            $('#answer4').show();
 
-    $('#next').click(function(){
-            console.log('doing stuff');
-            $('#results').html('');
-            options.splice(currentQuestion,1);
-            askQuestion();
-    }) 
-
-    
-
+            currentQuestion = Math.floor(Math.random() * options.length);
+                        
+            $('#question').html(options[currentQuestion].question);
+            $('#answer1').html(options[currentQuestion].choice[0]);
+            $('#answer2').html(options[currentQuestion].choice[1]);
+            $('#answer3').html(options[currentQuestion].choice[2]);
+            $('#answer4').html(options[currentQuestion].choice[3]);
 
 
-        
-    });
-        
+        }
+
+        $(".answers").click(function() {
+            hidden();
+            wins = 0;
+
+            var thisOption = $(this).text()
+            var correctAnswer = options[currentQuestion].choice[options[currentQuestion].answer]
+
+            if (thisOption === correctAnswer) {
+                $('#results').html('Correct!'+ '<br>' + options[currentQuestion].photo);
+                $('#next').show();
+                wins += 1;
+                $('#wins').text('Wins: '+ wins + '/7');
+
+            } else {
+                $('#results').html('OH NO! The answer is '+ options[currentQuestion].correct + '<br>' + options[currentQuestion].photo);
+                $('#next').show();
+            }
+
+
+
+        })
+
+        $('#next').click(function(){
+                console.log('doing stuff');
+                $('#results').html('');
+                options.splice(currentQuestion,1);
+                if (options.length === 0) {
+                    gameOver()
+                } else { 
+                    askQuestion()
+        }
+        })
+
+        $('#start-over').click(function(){
+            document.location.reload(true);
+        })
+
+    };
+})
 
 
 
